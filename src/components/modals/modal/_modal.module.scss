@@ -1,0 +1,31 @@
+@import '../../../style/variables/index.scss';
+
+._main{
+  max-width: 720px;
+  width: 100%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
+  border: 1px solid rgba(76, 76, 255, 0.20);
+  background: #1C1C21;
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04), 0px 4px 8px 0px rgba(0, 0, 0, 0.04), 0px 16px 24px 0px rgba(0, 0, 0, 0.04), 0px 24px 32px 0px rgba(0, 0, 0, 0.04);
+  z-index: $modal-z-index;
+}
+
+._header{
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+._close{
+  background: transparent;
+  border:none;
+}

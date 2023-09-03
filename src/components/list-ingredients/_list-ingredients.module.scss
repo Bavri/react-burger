@@ -1,18 +1,17 @@
-.tablist{
+._tabList{
   padding-left: 0;
-  width: 600px;
+  width: 620px;
   height: 756px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
   list-style-type:none;
+  &:last-child{
+    margin-bottom: 0;
+  }
 }
 
-.tablist:last-child{
-  margin-bottom: 0;
-}
-
-.grid{
+._grid{
   display: grid;
   padding: 0 16px;
   grid-template-columns: 272px 272px;
