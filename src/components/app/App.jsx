@@ -4,28 +4,31 @@ import AppHeader from '../app-header/app-header';
 import React from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
+import {getListIngredientsApi} from '../../utils/api';
 
 function App() {
-   const api ='https://norma.nomoreparties.space/api/ingredients';
+
    const [state, setState] = React.useState({
       isLoading: false,
       hasError: false,
       data: [],
    });
 
+   const getData=(response) =>{
+      setState({ ...state, data:response.data, isLoading: false });
+   };
 
-   const getData= async () => {
+   const errorServer=() =>{
+      setState({ ...state, hasError: true, isLoading: false });
+   };
+
+   const requestServer= async () => {
       setState({ ...state, hasError: false, isLoading: true });
-      await fetch(api)
-         .then(res => res.json())
-         .then(res => setState({ ...state, data:res.data, isLoading: false }))
-         .catch(() => {
-            setState({ ...state, hasError: true, isLoading: false });
-         });
+      getListIngredientsApi(getData,errorServer);
    };
 
    React.useEffect(() => {
-      getData();
+      requestServer();
    // eslint-disable-next-line react-hooks/exhaustive-deps
    },[]);
 

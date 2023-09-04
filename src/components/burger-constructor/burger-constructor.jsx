@@ -3,7 +3,7 @@ import styles from './_burger-constructor.module.scss';
 import { ConstructorElement, CurrencyIcon,Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modals/modal/modal';
 import OrderDetails from '../order-details/order-details';
-import PropTypes from 'prop-types';
+import {arrayOfIngredientsShape} from '../../utils/prop-types';
 
 function BurgerConstructor(props){
    const [modal,setModal]= React.useState(false);
@@ -17,7 +17,7 @@ function BurgerConstructor(props){
 
    return(
       <>
-         {modal&&<Modal onClose={handleCloseModal} children={<OrderDetails/>}></Modal>}
+         {modal&&<Modal onClose={handleCloseModal}><OrderDetails/></Modal>}
          <section className={styles._main}>
             <div className={styles._scroll}>
                <div className={styles._wrapperConstructor}>
@@ -60,23 +60,9 @@ function BurgerConstructor(props){
    );
 }
 
-const objectShape = {
-   _id: PropTypes.string.isRequired,
-   name: PropTypes.string.isRequired,
-   type: PropTypes.string.isRequired,
-   proteins: PropTypes.number.isRequired,
-   fat: PropTypes.number.isRequired,
-   carbohydrates: PropTypes.number.isRequired,
-   calories: PropTypes.number.isRequired,
-   price: PropTypes.number.isRequired,
-   image: PropTypes.string.isRequired,
-   image_mobile: PropTypes.string.isRequired,
-   image_large: PropTypes.string.isRequired,
-   __v: PropTypes.number.isRequired
-};
 
 BurgerConstructor.propTypes={
-   data:  PropTypes.arrayOf(PropTypes.shape(objectShape)),
+   data:  arrayOfIngredientsShape,
 };
 
 export default BurgerConstructor;
