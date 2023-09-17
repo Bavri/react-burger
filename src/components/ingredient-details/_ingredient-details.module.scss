@@ -1,0 +1,31 @@
+
+
+._main{
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  list-style: none;
+}
+
+._image{
+  width: 420px;
+  height: 240px;
+  margin-bottom: 16px;
+}
+
+._list{
+  margin-top: 32px;
+  display: flex;
+  list-style: none;
+  &:last-child{
+    margin-right: 0;
+  }
+  &Item{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    margin-right: 20px;
+  }
+}
+

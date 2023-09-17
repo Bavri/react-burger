@@ -1,0 +1,12 @@
+._item{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  overflow: hidden;
+}
+
+._flexAlginCenter{
+  display: flex;
+  align-items:center;
+}
