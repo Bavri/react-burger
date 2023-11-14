@@ -2,49 +2,35 @@
 import styles from './_app.module.scss';
 import AppHeader from '../app-header/app-header';
 import React from 'react';
+import { getListIngredients } from '../../services/selectors';
+import { listIngredientsAction } from '../../services/actions/list-ingredients';
+import { useSelector, useDispatch } from 'react-redux';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import {getListIngredientsApi} from '../../utils/api';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
 
-   const [state, setState] = React.useState({
-      isLoading: false,
-      hasError: false,
-      data: [],
-   });
-
-   const getData=(response) =>{
-      setState({ ...state, data:response.data, isLoading: false });
-   };
-
-   const errorServer=() =>{
-      setState({ ...state, hasError: true, isLoading: false });
-   };
-
-   const requestServer= async () => {
-      setState({ ...state, hasError: false, isLoading: true });
-      getListIngredientsApi(getData,errorServer);
-   };
-
+   const dispatch = useDispatch();
+   const { data, isLoading, isErrors } = useSelector(getListIngredients);
    React.useEffect(() => {
-      requestServer();
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-   },[]);
+      dispatch(listIngredientsAction());
+   }, [dispatch]);
 
    return (
       <>
          <div className={styles._app}>
             <AppHeader/>
-            {state.isLoading && <span>Загрузка</span>}
-            {state.hasError && <span>Ошибка</span>}
-            {
-               !state.isLoading &&
-            !state.hasError &&
-            state.data.length &&
+            {isLoading && <span>Загрузка</span>}
+            {isErrors && <span>Ошибка</span>}
+            {data &&
+
             <main className={styles._wrapper}>
-               <BurgerIngredients data={state.data}/>
-               <BurgerConstructor data={state.data}/>
+               <DndProvider backend={HTML5Backend}>
+                  <BurgerIngredients/>
+                  <BurgerConstructor/>
+               </DndProvider>
             </main>
             }
          </div>

@@ -52,7 +52,7 @@ function Modal(props){
       </>
    );
 }
-Modal.PropTypes={
+Modal.propTypes={
    onClose : PropTypes.func.isRequired
 };
 
