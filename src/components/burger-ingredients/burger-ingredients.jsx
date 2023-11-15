@@ -95,37 +95,32 @@ function BurgerIngredients (){
             <li className="mb-10" ref={refBun}>
                <h2 className="mb-6 text text_type_main-medium">Булки</h2>
                <div className={styles._grid}>
-                  {listItem()['bun'].map((element, index) => {
+                  {(listItem()['bun'].map((element, index=element._id) => {
                      return <ListItemIngredients key={index} data={element} count={countBunConstructor(element._id)}/>;
-                  })}
+                  }))}
                </div>
             </li>
             <li className="mb-10">
                <h2 className="mb-6 text text_type_main-medium" ref={refSauce}>Соусы</h2>
                <div className={styles._grid}>
-                  {listItem()['sauce'].map((element, index) => {
+                  {(listItem()['sauce'].map((element, index=element._id) => {
                      return <ListItemIngredients key={index} data={element} count={countItemConstructor(element._id)} />;
-                  })}
+                  }))}
                </div>
             </li>
             <li className="mb-10">
                <h2 className="mb-6 text text_type_main-medium"  ref={refMain}>Начинка</h2>
                <div className={styles._grid}>
-                  {listItem()['main'].map((element, index) => {
+                  {(listItem()['main'].map((element, index=element._id) => {
                      return <ListItemIngredients key={index} data={element} count={countItemConstructor(element._id)}/>;
-                  })}
+                  }))}
                </div>
             </li>
          </ul>
          {
             activeIngredient&&<Modal onClose={handleCloseModal} header={'Детали ингредиента'}>
                <IngredientDetails
-                  name={activeIngredient.name}
-                  calories={activeIngredient.calories}
-                  proteins={activeIngredient.proteins}
-                  fat={activeIngredient.fat}
-                  carbohydrates={activeIngredient.carbohydrates}
-                  image={activeIngredient.image}
+                  data={activeIngredient}
                />
             </Modal>}
 

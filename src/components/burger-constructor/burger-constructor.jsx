@@ -99,76 +99,76 @@ function BurgerConstructor(){
 
 
    return(
-      <>
-         <section className={styles._main}>
-            {modal&&<Modal onClose={handleCloseModal}><OrderDetails /></Modal>}
-            <div className={styles._wrapperConstructor}>
-               <div ref={dropBunUpRef} className={styles._wrapperDrag}>
-                  {
-                     bun?
-                        <ConstructorElement
-                           text={bun.name}
-                           price={bun.price}
-                           thumbnail={bun.image}
-                           type="top"
-                           isLocked={true}
-                        />
-                        :
-                        <div className={styles._constructorElement}>
-                           <span>Перетащите булку</span>
-                        </div>
-                  }
-               </div>
-               <div ref={dropIngredientRef} className={styles._wrapperDrag}>
-                  {
-                     ingredients && ingredients.length > 0 ?
-                        ingredients.map((item,index) =>{
-                           return <BurgerConstructorItemSort
-                              item={item}
-                              key={item.dragId}
-                              index={index}
-                              moveCard={moveCard}
-                           />;
-                        }
-                        )
-                        :
-                        <div className={styles._constructorElement}>
-                           <span>Перетащите ингредиент</span>
-                        </div>
-                  }
+      <section className={styles._main}>
+         {modal&&<Modal onClose={handleCloseModal}><OrderDetails /></Modal>}
+         <div className={styles._wrapperConstructor}>
+            <div ref={dropBunUpRef} className={styles._wrapperDrag}>
+               {(
+                  bun?
+                     <ConstructorElement
+                        text={bun.name+' (вверх)'}
+                        price={bun.price}
+                        thumbnail={bun.image}
+                        type="top"
+                        isLocked={true}
+                     />
+                     :
+                     <div className={styles._constructorElement}>
+                        <span>Перетащите булку</span>
+                     </div>
+               )}
+            </div>
+            <div ref={dropIngredientRef} className={styles._wrapperDrag}>
+               {(
+                  ingredients && ingredients.length > 0 ?
+                     ingredients.map((item,index) =>{
+                        return <BurgerConstructorItemSort
+                           item={item}
+                           key={item.dragId}
+                           index={index}
+                           moveCard={moveCard}
+                        />;
+                     }
+                     )
+                     :
+                     <div className={styles._constructorElement}>
+                        <span>Перетащите ингредиент</span>
+                     </div>
+               )
+               }
 
 
-               </div>
-               <div ref={dropBunDownRef} className={styles._wrapperDrag}>
-                  {
-                     bun?
-                        <ConstructorElement
-                           text={bun.name}
-                           price={bun.price}
-                           thumbnail={bun.image}
-                           type="bottom"
-                           isLocked={true}
-                        />
-                        :
-                        <div className={styles._constructorElement}>
-                           <span>Перетащите булку</span>
-                        </div>
-                  }
-               </div>
             </div>
-            <div className={styles._wrapperDecoration}>
-               <div className={styles._wrapperCost}>
-                  <span className="text text_type_main-large">{total}</span>
-                  <CurrencyIcon type={'primary'}/>
-               </div>
-               <div className={styles._over}>
-                  <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
-                     Оформить заказ
-                  </Button>
-               </div>
+            <div ref={dropBunDownRef} className={styles._wrapperDrag}>
+               {(
+                  bun?
+                     <ConstructorElement
+                        text={bun.name+' (низ)'}
+                        price={bun.price}
+                        thumbnail={bun.image}
+                        type="bottom"
+                        isLocked={true}
+                     />
+                     :
+                     <div className={styles._constructorElement}>
+                        <span>Перетащите булку</span>
+                     </div>
+               )}
             </div>
-         </section>
-      </>
+         </div>
+         <div className={styles._wrapperDecoration}>
+            <div className={styles._wrapperCost}>
+               <span className="text text_type_main-large">{total}</span>
+               <CurrencyIcon type={'primary'}/>
+            </div>
+            <div className={styles._over}>
+               <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
+                  Оформить заказ
+               </Button>
+            </div>
+         </div>
+      </section>
+
    );
 }
 

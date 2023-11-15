@@ -2,17 +2,20 @@ import styles from './_order-details.module.scss';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
 import image from '../../images/done.png';
-import { useDispatch } from 'react-redux';
-import { getOrder } from '../../services/selectors';
+import {  useSelector } from 'react-redux';
+import { getOrderNumber } from '../../services/selectors';
+
+
+
 
 
 function OrderDetails(){
-   const id=useDispatch(getOrder).id;
+   const id=useSelector(getOrderNumber);
 
    return(
       <ul className={styles._main}>
          <li>
-            <span className={`${styles._numberOrder} mb-8 text text_type_digits-large`}>{id}</span>
+            <span className={`${styles._numberOrder} mb-8 text text_type_digits-large`}>{(id)}</span>
          </li>
          <li>
             <span className="text text_type_main-small mb-15">идентификатор заказа</span>

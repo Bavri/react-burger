@@ -4,3 +4,4 @@ export const getListBurgerConstructor = (state) => state.listBurgerConstructor.i
 export const getBunBurgerConstructor= (state) => state.listBurgerConstructor.typeBun;
 export const getTotalBurgerConstructor = (state) => state.listBurgerConstructor.total;
 export const getOrder=(state) => state.order;
+export const getOrderNumber=(state) => state.order.number;

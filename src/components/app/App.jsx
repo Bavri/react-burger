@@ -19,22 +19,22 @@ function App() {
    }, [dispatch]);
 
    return (
-      <>
-         <div className={styles._app}>
-            <AppHeader/>
-            {isLoading && <span>Загрузка</span>}
-            {isErrors && <span>Ошибка</span>}
-            {data &&
+
+      <div className={styles._app}>
+         <AppHeader/>
+         {(isLoading && <span>Загрузка</span>)}
+         {(isErrors && <span>Ошибка</span>)}
+         {(data &&
 
             <main className={styles._wrapper}>
                <DndProvider backend={HTML5Backend}>
                   <BurgerIngredients/>
                   <BurgerConstructor/>
                </DndProvider>
-            </main>
-            }
-         </div>
-      </>
+            </main>)
+         }
+      </div>
+
    );
 }
 

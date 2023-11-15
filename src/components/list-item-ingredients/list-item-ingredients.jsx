@@ -36,13 +36,13 @@ function ListItemIngredients (props){
       <>
 
          <div onClick={handleOpenModal} className={styles._item} ref={dragRef} style={{opacity}}>
-            {props.count!=0&&props.count&&<Counter count={props.count} size="default" extraClass="m-1" />}
+            {(props.count!=0&&props.count&&<Counter count={props.count} size="default" extraClass="m-1" />)}
             <img src={props.data.image} alt={props.data.name} className="mb-2" />
             <div className={`${styles._flexAlginCenter}`}>
-               <span className="mr-2 text text_type_main-small">{props.data.price}</span>
+               <span className="mr-2 text text_type_main-small">{(props.data.price)}</span>
                <CurrencyIcon type={'primary'}/>
             </div>
-            <span className="text text_type_main-small">{props.data.name}</span>
+            <span className="text text_type_main-small">{(props.data.name)}</span>
          </div>
       </>
    );

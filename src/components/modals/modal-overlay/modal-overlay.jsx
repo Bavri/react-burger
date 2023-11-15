@@ -10,7 +10,7 @@ function ModalOverlay(props){
 }
 
 
-ModalOverlay.PropTypes={
+ModalOverlay.propTypes={
    onClose : PropTypes.func.isRequired
 };
 
