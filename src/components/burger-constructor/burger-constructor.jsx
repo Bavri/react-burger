@@ -100,28 +100,30 @@ function BurgerConstructor(){
 
    return(
       <section className={styles._main}>
-         {modal&&<Modal onClose={handleCloseModal}><OrderDetails /></Modal>}
+         {modal&&(<Modal onClose={handleCloseModal}><OrderDetails /></Modal>)}
          <div className={styles._wrapperConstructor}>
             <div ref={dropBunUpRef} className={styles._wrapperDrag}>
                {(
                   bun?
-                     <ConstructorElement
+                     (<ConstructorElement
                         text={bun.name+' (вверх)'}
                         price={bun.price}
                         thumbnail={bun.image}
                         type="top"
                         isLocked={true}
-                     />
+                     />)
                      :
-                     <div className={styles._constructorElement}>
-                        <span>Перетащите булку</span>
-                     </div>
+                     (
+                        <div className={styles._constructorElement}>
+                           <span>Перетащите булку</span>
+                        </div>
+                     )
                )}
             </div>
             <div ref={dropIngredientRef} className={styles._wrapperDrag}>
                {(
                   ingredients && ingredients.length > 0 ?
-                     ingredients.map((item,index) =>{
+                     ( ingredients.map((item,index) =>{
                         return <BurgerConstructorItemSort
                            item={item}
                            key={item.dragId}
@@ -129,11 +131,13 @@ function BurgerConstructor(){
                            moveCard={moveCard}
                         />;
                      }
-                     )
+                     ))
                      :
-                     <div className={styles._constructorElement}>
-                        <span>Перетащите ингредиент</span>
-                     </div>
+                     (
+                        <div className={styles._constructorElement}>
+                           <span>Перетащите ингредиент</span>
+                        </div>
+                     )
                )
                }
 
@@ -142,17 +146,19 @@ function BurgerConstructor(){
             <div ref={dropBunDownRef} className={styles._wrapperDrag}>
                {(
                   bun?
-                     <ConstructorElement
+                     (<ConstructorElement
                         text={bun.name+' (низ)'}
                         price={bun.price}
                         thumbnail={bun.image}
                         type="bottom"
                         isLocked={true}
-                     />
+                     />)
                      :
-                     <div className={styles._constructorElement}>
-                        <span>Перетащите булку</span>
-                     </div>
+                     (
+                        <div className={styles._constructorElement}>
+                           <span>Перетащите булку</span>
+                        </div>
+                     )
                )}
             </div>
          </div>

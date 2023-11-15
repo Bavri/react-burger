@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import styles from './_burger-ingredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -95,24 +96,24 @@ function BurgerIngredients (){
             <li className="mb-10" ref={refBun}>
                <h2 className="mb-6 text text_type_main-medium">Булки</h2>
                <div className={styles._grid}>
-                  {(listItem()['bun'].map((element, index=element._id) => {
-                     return <ListItemIngredients key={index} data={element} count={countBunConstructor(element._id)}/>;
+                  {(listItem()['bun'].map((element) => {
+                     return <ListItemIngredients key={element._id} data={element} count={countBunConstructor(element._id)}/>;
                   }))}
                </div>
             </li>
             <li className="mb-10">
                <h2 className="mb-6 text text_type_main-medium" ref={refSauce}>Соусы</h2>
                <div className={styles._grid}>
-                  {(listItem()['sauce'].map((element, index=element._id) => {
-                     return <ListItemIngredients key={index} data={element} count={countItemConstructor(element._id)} />;
+                  {(listItem()['sauce'].map((element) => {
+                     return <ListItemIngredients key={element._id} data={element} count={countItemConstructor(element._id)} />;
                   }))}
                </div>
             </li>
             <li className="mb-10">
                <h2 className="mb-6 text text_type_main-medium"  ref={refMain}>Начинка</h2>
                <div className={styles._grid}>
-                  {(listItem()['main'].map((element, index=element._id) => {
-                     return <ListItemIngredients key={index} data={element} count={countItemConstructor(element._id)}/>;
+                  {(listItem()['main'].map((element) => {
+                     return <ListItemIngredients key={element._id} data={element} count={countItemConstructor(element._id)}/>;
                   }))}
                </div>
             </li>
