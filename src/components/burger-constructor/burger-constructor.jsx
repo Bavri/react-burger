@@ -124,12 +124,12 @@ function BurgerConstructor(){
                {(
                   ingredients && ingredients.length > 0 ?
                      ( ingredients.map((item,index) =>{
-                        return <BurgerConstructorItemSort
+                        return (<BurgerConstructorItemSort
                            item={item}
                            key={item.dragId}
                            index={index}
                            moveCard={moveCard}
-                        />;
+                        />);
                      }
                      ))
                      :
