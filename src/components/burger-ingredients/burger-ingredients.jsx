@@ -119,11 +119,11 @@ function BurgerIngredients (){
             </li>
          </ul>
          {
-            activeIngredient&&<Modal onClose={handleCloseModal} header={'Детали ингредиента'}>
+            activeIngredient&&(<Modal onClose={handleCloseModal} header={'Детали ингредиента'}>
                <IngredientDetails
                   data={activeIngredient}
                />
-            </Modal>}
+            </Modal>)}
 
       </section>
    );
