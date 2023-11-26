@@ -5,6 +5,11 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
+Modal.propTypes={
+   onClose : PropTypes.func.isRequired,
+   children: PropTypes.element.isRequired
+};
+
 function Modal(props){
    const modalRoot = document.getElementById('modal-portal');
    const [showModal, setShowModal] = React.useState(false);
@@ -22,7 +27,7 @@ function Modal(props){
    };
 
    const handleKeyDown = (e) => {
-      if (e.keyCode === 27) {
+      if (e.key=== 'Escape') {
          handleCloseModal();
       }
    };
@@ -34,13 +39,13 @@ function Modal(props){
                <ModalOverlay onClose={props.onClose}/>
                <div className={styles._main} ref={ref} onKeyDown={handleKeyDown} tabIndex={-1}>
                   <div className={styles._header}>
-                     <h2>{props.header? props.header: ''}</h2>
+                     <h2>{(props.header? props.header: '')}</h2>
                      <button className={styles._close} onClick={handleCloseModal}>
                         <CloseIcon type="primary" />
                      </button>
                   </div>
                   <div onClick={(e) => e.stopPropagation()}>
-                     {props.children}
+                     {(props.children)}
                   </div>
                </div>
             </>
@@ -52,8 +57,6 @@ function Modal(props){
       </>
    );
 }
-Modal.PropTypes={
-   onClose : PropTypes.func.isRequired
-};
+
 
 export default Modal;

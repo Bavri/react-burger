@@ -7,3 +7,26 @@
 ._wrapper{
   display: flex;
 }
+
+._tabList{
+  padding-left: 0;
+  width: 620px;
+  height: 756px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  list-style-type:none;
+  &:last-child{
+    margin-bottom: 0;
+  }
+}
+
+._grid{
+  display: grid;
+  padding: 0 16px;
+  grid-template-columns: 272px 272px;
+  grid-template-rows: 208px;
+  column-gap: 24px;
+  row-gap: 32px;
+}
+
