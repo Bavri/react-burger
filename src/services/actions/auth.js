@@ -4,8 +4,6 @@ import {
    APILOGOUT,
    APIREGISTER, APIRESETPASSWORD, APITOKEN, APIUSER,
    checkResponse,
-   deleteCookie, getCookie,
-   setCookie
 } from '../../utils/api';
 
 
@@ -51,10 +49,11 @@ export function authLoginAction(form) {
             const refreshToken = response.refreshToken;
 
             if (accessToken) {
-               setCookie('accessToken', accessToken);
+               localStorage.setItem('accessToken', accessToken);
                localStorage.setItem('refreshToken', refreshToken);
             }
             dispatch({ type: AUTH_LOGIN_SUCCESS, user: response.user });
+
          })
          .catch(err => {
             dispatch({ type: AUTH_LOGIN_ERROR, message: err.message });
@@ -76,7 +75,7 @@ export function authRegisterAction(form) {
             const refreshToken = response.refreshToken;
 
             if (accessToken) {
-               setCookie('accessToken', accessToken);
+               localStorage.setItem('accessToken', accessToken);
                localStorage.setItem('refreshToken', refreshToken);
             }
 
@@ -103,7 +102,7 @@ export function authLogoutAction() {
          .then(() => {
             dispatch({ type: AUTH_LOGOUT_SUCCESS });
             localStorage.removeItem('refreshToken');
-            deleteCookie('accessToken');
+            localStorage.removeItem('accessToken');
          })
          .catch(err => {
             dispatch({ type: AUTH_LOGOUT_ERROR, message: err.message });
@@ -170,13 +169,13 @@ export const setAuthChecked = (value) => ({
 
 export function authGetUserAction() {
    return function (dispatch) {
-      if(getCookie('accessToken')){
+      if(localStorage.getItem('accessToken')){
          dispatch({ type: AUTH_GET_USER_REQUEST });
          let request= {
             method: 'GET',
             headers: {
                'Content-Type': 'application/json;charset=utf-8',
-               Authorization: 'Bearer ' + getCookie('accessToken')
+               Authorization: 'Bearer ' + localStorage.getItem('accessToken')
             }
          };
          fetch(`${APIUSER}`, request)
@@ -188,7 +187,7 @@ export function authGetUserAction() {
                         return Promise.reject(refreshData);
                      }
                      localStorage.setItem('refreshToken', refreshData.refreshToken);
-                     setCookie('accessToken', refreshData.accessToken);
+                     localStorage.setItem('accessToken', refreshData.accessToken);
                      request.headers.Authorization = refreshData.accessToken;
 
                      return  fetch(`${APIUSER}`,request)
@@ -218,7 +217,7 @@ export function authPatchUserAction(form) {
          method: 'PATCH',
          headers: {
             'Content-Type': 'application/json;charset=utf-8',
-            Authorization: 'Bearer ' + getCookie('accessToken')
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken')
          },
          body: JSON.stringify({ ...form })
       };
@@ -231,7 +230,7 @@ export function authPatchUserAction(form) {
                      return Promise.reject(refreshData);
                   }
                   localStorage.setItem('refreshToken', refreshData.refreshToken);
-                  setCookie('accessToken', refreshData.accessToken);
+                  localStorage.setItem('accessToken', refreshData.accessToken);
                   request.headers.Authorization = refreshData.accessToken;
 
                   return  fetch(`${APIUSER}`,request)
