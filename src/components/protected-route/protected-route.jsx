@@ -47,7 +47,7 @@ export const OnlyUnAuth = ({ component }) => (
 );
 
 export const OnlyAuth = ({ component }) => (
-    <Protected onlyUnAuth={false} component={component} />
+   <Protected onlyUnAuth={false} component={component} />
 );
 
 
