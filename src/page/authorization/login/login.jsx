@@ -1,38 +1,47 @@
 import {Button, EmailInput, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
-import {useState} from 'react';
+
 import {Link} from 'react-router-dom';
 import {AppRoutes} from '../../../utils/app-routes';
-import style from './_login-page.module.scss';
+import style from './_login.module.scss';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+import {useDispatch} from 'react-redux';
+//import {getAuth, getUserOk} from '../../../services/selectors';
+import { authLoginAction} from '../../../services/actions/auth';
+import {useForm} from '../../../hook/use-from';
+import {useCallback} from 'react';
 
-function LoginPage(){
-   const [value, setValue] = useState('bob@example.com');
-   const onChange = e => {
-      setValue(e.target.value);
-   };
+function Login(){
+   const dispatch= useDispatch();
+   // const userLogin = useSelector(getUserOk);
+   // const nav = useNavigate();
+   const sendingForm = useCallback((state) => {
+      dispatch(authLoginAction(state));
+   }, [dispatch]);
 
-   const [valuePassword, setValuePassword] = useState('password');
-   const onChangePassword = e => {
-      setValuePassword(e.target.value);
-   };
+   const { formData, onChange, onSubmit } = useForm({
+      email: '',
+      password: ''
+   }, sendingForm);
+
+
 
    return (
       <main className={style._main}>
-         <form className={style._form}>
+         <form className={style._form} onSubmit={onSubmit}>
             <h1 className={'text text_type_main-smail'}>Вход</h1>
             <EmailInput
                onChange={onChange}
-               value={value}
+               value={formData.email}
                name={'email'}
                placeholder="Логин"
                isIcon={false}
             />
             <PasswordInput
-               onChange={onChangePassword}
-               value={valuePassword}
+               onChange={onChange}
+               value={formData.password}
                name={'password'}
             />
-            <Button htmlType="button" type="primary" size="medium">
+            <Button htmlType="submit" type="primary" size="medium">
                Войти
             </Button>
          </form>
@@ -53,4 +62,4 @@ function LoginPage(){
 
 }
 
-export default LoginPage;
+export default Login;

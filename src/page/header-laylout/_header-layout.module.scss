@@ -1,15 +1,9 @@
 @import "../../style/variables/index";
 
-._app {
+._main {
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: $black-131316;
-}
-
-._wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
 }

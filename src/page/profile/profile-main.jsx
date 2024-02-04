@@ -1,64 +1,60 @@
-import {
-   EmailInput,
-   PasswordInput
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
+
+import {NavLink, Outlet} from 'react-router-dom';
 
 import style from './_profile.module.scss';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
 import {AppRoutes} from '../../utils/app-routes';
 
-function Profile(){
-   const [value, setValue] = useState('bob@example.com');
-   const onChange = e => {
-      setValue(e.target.value);
-   };
 
-   const [valuePassword, setValuePassword] = useState('password');
-   const onChangePassword = e => {
-      setValuePassword(e.target.value);
-   };
+const navLinks = [
+   {
+      name: 'Профиль',
+      path: AppRoutes.profileInfo
+   },
+   {
+      name: 'Выход',
+      path: AppRoutes.profileLogout,
+   },
+   {
+      name: 'История заказов',
+      path: AppRoutes.profileOrder,
+   },
+];
+
+function ProfileMain(){
 
    return (
       <main className={style._main}>
          <div className={style._leftBar}>
-            <div className={style._menu}>
-               <div className={'text text_type_main-medium'}>Профиль</div>
-               <div className={'text text_type_main-medium'}>История заказов</div>
-               <div className={'text text_type_main-medium'}><Link to={AppRoutes.login}>Выход</Link></div>
-            </div>
-            <span>
+            <ul className={style._menu}>
+               {
+                  navLinks.map((navLink) =>
+                     (
+                        <li key={navLink.name}>
+                           <NavLink
+                              to={`${AppRoutes.profile}${navLink.path}`}
+                              className={
+                                 ({isActive}) => isActive ?
+                                    'text text_type_main-medium text_color_primary':
+                                    'text text_type_main-medium text_color_inactive'
+                              }
+                           >
+                              {navLink.name}
+                           </NavLink>
+                        </li>
+                     ),
+                  )
+               }
+            </ul>
+            <span className={'text text_type_main-small text_color_inactive'}>
                В этом разделе вы можете изменить свои персональные данные
             </span>
          </div>
-
-         <form className={style._form}>
-            <EmailInput
-               onChange={onChange}
-               value={value}
-               name={'name'}
-               placeholder="Имя"
-               isIcon={true}
-            />
-            <EmailInput
-               onChange={onChange}
-               value={value}
-               name={'email'}
-               placeholder="Логин"
-               isIcon={true}
-            />
-            <PasswordInput
-               onChange={onChangePassword}
-               value={valuePassword}
-               name={'password'}
-               isIcon={true}
-            />
-         </form>
+         <Outlet/>
       </main>
 
    );
 
 }
 
-export default Profile;
+export default ProfileMain;
