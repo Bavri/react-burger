@@ -6,17 +6,20 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { SET_ACTIVE_INGREDIENT } from '../../services/actions/ingredient-active';
 import { useDrag } from 'react-dnd';
+import {Link, useLocation} from 'react-router-dom';
 
 function ListItemIngredients (props){
 
    const dispatch = useDispatch();
+   const location = useLocation();
 
+   const ingredientId = props.data._id;
    const handleOpenModal=() =>{
       dispatch({type:SET_ACTIVE_INGREDIENT,ingredient:props.data});
    };
 
    const type  = () =>{
-      if(props.data.type=='bun'){
+      if(props.data.type==='bun'){
          return props.data.type;
       }
       else{
@@ -33,10 +36,13 @@ function ListItemIngredients (props){
    });
 
    return(
-      <>
-
+      <Link
+         key={ingredientId}
+         to={`/ingredients/${ingredientId}`}
+         state={{ background: location }}
+      >
          <div onClick={handleOpenModal} className={styles._item} ref={dragRef} style={{opacity}}>
-            {(props.count!=0&&props.count&&(<Counter count={props.count} size="default" extraClass="m-1" />))}
+            {(props.count!==0&&props.count&&(<Counter count={props.count} size="default" extraClass="m-1" />))}
             <img src={props.data.image} alt={props.data.name} className="mb-2" />
             <div className={`${styles._flexAlginCenter}`}>
                <span className="mr-2 text text_type_main-small">{(props.data.price)}</span>
@@ -44,7 +50,7 @@ function ListItemIngredients (props){
             </div>
             <span className="text text_type_main-small">{(props.data.name)}</span>
          </div>
-      </>
+      </Link>
    );
 }
 

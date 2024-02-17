@@ -5,7 +5,7 @@ import { ConstructorElement, CurrencyIcon,Button} from '@ya.praktikum/react-deve
 import Modal from '../modals/modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBunBurgerConstructor,
+import { getAuth, getBunBurgerConstructor,
    getListBurgerConstructor, getOrder, getTotalBurgerConstructor } from '../../services/selectors';
 import { useDrop } from 'react-dnd/dist/hooks';
 import { ADD_INGREDIENT,ADD_BUN, SOTR_INGREDIENTS,
@@ -13,6 +13,8 @@ import { ADD_INGREDIENT,ADD_BUN, SOTR_INGREDIENTS,
 import { DELETE_ORDER, orderAction } from '../../services/actions/order';
 import BurgerConstructorItemSort from '../burger-constructor-item-sort/burger-constructor-item-sort';
 import { nanoid } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
+import {AppRoutes} from '../../utils/app-routes';
 
 
 function BurgerConstructor(){
@@ -20,6 +22,8 @@ function BurgerConstructor(){
    const ingredients = useSelector(getListBurgerConstructor);
    const bun=useSelector(getBunBurgerConstructor);
    const total= useSelector(getTotalBurgerConstructor);
+   const {userLogin}=useSelector(getAuth);
+   const nav=useNavigate();
    const [, dropIngredientRef] = useDrop({
       accept: 'ingredient',
       drop(item){
@@ -78,6 +82,15 @@ function BurgerConstructor(){
          dispatch(orderAction(orderIdList()));
       }
       !isLoading&&!isErrors&& setModal(true);
+   };
+
+   const sendingOrder=()=>{
+      if(userLogin){
+         handleOpenModal();
+      }
+      else{
+         nav(AppRoutes.login);
+      }
    };
 
    const handleCloseModal = () => {
@@ -168,7 +181,7 @@ function BurgerConstructor(){
                <CurrencyIcon type={'primary'}/>
             </div>
             <div className={styles._over}>
-               <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
+               <Button htmlType="button" type="primary" size="large" onClick={sendingOrder}>
                   Оформить заказ
                </Button>
             </div>

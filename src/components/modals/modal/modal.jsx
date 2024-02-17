@@ -12,7 +12,7 @@ Modal.propTypes={
 
 function Modal(props){
    const modalRoot = document.getElementById('modal-portal');
-   const [showModal, setShowModal] = React.useState(false);
+   const [showModal, setShowModal] = React.useState(true);
    const ref = React.useRef(null);
    React.useEffect(() => {
       setShowModal(true);

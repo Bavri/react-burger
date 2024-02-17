@@ -3,19 +3,14 @@
 import styles from './_burger-ingredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
-import { useDispatch, useSelector} from 'react-redux';
+import {  useSelector} from 'react-redux';
 import ListItemIngredients from '../list-item-ingredients/list-item-ingredients';
-import { getListIngredients,getActiveIngredient,
+import { getListIngredients,
    getListBurgerConstructor,getBunBurgerConstructor} from '../../services/selectors';
 import { useInView } from 'react-intersection-observer';
-import Modal from '../modals/modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import { DELETE_ACTIVE_INGREDIENT } from '../../services/actions/ingredient-active';
 
 function BurgerIngredients (){
-   const dispatch = useDispatch();
    const { data } = useSelector(getListIngredients);
-   const activeIngredient = useSelector(getActiveIngredient);
 
    const  listItem=()=>{
       let sortListItem=[];
@@ -52,9 +47,6 @@ function BurgerIngredients (){
 
    };
 
-   const handleCloseModal = () => {
-      dispatch({type : DELETE_ACTIVE_INGREDIENT});
-   };
 
    const ingredients = useSelector(getListBurgerConstructor);
    const bun = useSelector(getBunBurgerConstructor);
@@ -118,13 +110,6 @@ function BurgerIngredients (){
                </div>
             </li>
          </ul>
-         {
-            activeIngredient&&(<Modal onClose={handleCloseModal} header={'Детали ингредиента'}>
-               <IngredientDetails
-                  data={activeIngredient}
-               />
-            </Modal>)}
-
       </section>
    );
 }
