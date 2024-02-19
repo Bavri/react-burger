@@ -4,12 +4,15 @@ import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
 import {useSelector} from 'react-redux';
 import {getListIngredients} from '../../services/selectors';
 import {useLocation} from 'react-router-dom';
+import { TIngredient } from '../../utils/types';
 
-function IngredientDetails (){
+
+function IngredientDetails (): JSX.Element{
    const location=useLocation();
-   const id = location.pathname.match(/\/(\w+)$/)[1];
+   const matchResult = location.pathname.match(/\/(\w+)$/);
+   const id = matchResult ? matchResult[1] : null;
    const {data}= useSelector(getListIngredients);
-   const activeIngredient=data.find(item=>item._id===id);
+   const activeIngredient:TIngredient=data.find((item:TIngredient)=>item._id===id);
 
    return(
       <>

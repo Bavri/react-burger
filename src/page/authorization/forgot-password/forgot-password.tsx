@@ -1,65 +1,54 @@
 import {
    Button,
-   Input,
-   PasswordInput
+   EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import {useCallback, useEffect} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 import {AppRoutes} from '../../../utils/app-routes';
-import style from './_reset-password.module.scss';
+import style from './_forgot-password.module.scss';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
 import {useDispatch, useSelector} from 'react-redux';
-
-import { authResetPasswordAction} from '../../../services/actions/auth';
-import {useForm} from '../../../hook/use-from';
 import {getAuth} from '../../../services/selectors';
+import {AUTH_CLEAR, authForgotPasswordAction,} from '../../../services/actions/auth';
+import {useForm} from '../../../hook/use-from';
 
-function ResetPassword(){
+function ForgotPassword():JSX.Element{
    const dispatch= useDispatch();
-   const sendingForm = useCallback((state) => {
-      dispatch(authResetPasswordAction(state));
+   const sendingForm = useCallback((state: any) => {
+      //@ts-ignore
+      dispatch(authForgotPasswordAction(state));
    }, [dispatch]);
-   const { formData, onChange, onSubmit } = useForm({
-      password: '',
-      token: '',
-   }, sendingForm);
    const nav = useNavigate();
+   const { formData, onChange, onSubmit } = useForm({
+      email: '',
+   }, sendingForm);
    const {isError,isOk} =useSelector(getAuth);
    useEffect(()=>{
-      if(localStorage.getItem('reset')!=='1'){
-         nav(AppRoutes.forgotPassword);
-      }
-
       if(isOk) {
-         localStorage.removeItem('reset');
-         nav(AppRoutes.login);
+         localStorage.setItem('reset','1');
+         nav(AppRoutes.resetPassword);
+         dispatch({type:AUTH_CLEAR});
       }
 
       if(isError){
          nav(AppRoutes.notFound);
       }
-   },[isOk,nav,isError]);
-
+   },[isOk,nav,isError,dispatch]);
 
 
    return (
       <main className={style._main}>
          <form className={style._form} onSubmit={onSubmit}>
             <h1 className={'text text_type_main-smail'}>Восстановление пароля</h1>
-            <PasswordInput
+            <EmailInput
                onChange={onChange}
-               value={formData.password}
-               name={'password'}
-               placeholder={'Введите новый пароль'}
-            />
-            <Input
-               onChange={onChange}
-               value={formData.token}
-               name={'token'}
-               placeholder="Введите код из письма"
+               value={formData.email}
+               name={'email'}
+               placeholder="Укажите e-mail"
+               isIcon={false}
             />
             <Button htmlType="submit" type="primary" size="medium">
-               Cохранить
+               Восстановить
             </Button>
          </form>
          <div className={style._links}>
@@ -69,9 +58,8 @@ function ResetPassword(){
             </p>
          </div>
       </main>
-
    );
 
 }
 
-export default ResetPassword;
+export default ForgotPassword;

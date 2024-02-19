@@ -15,16 +15,17 @@ import BurgerConstructorItemSort from '../burger-constructor-item-sort/burger-co
 import { nanoid } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
 import {AppRoutes} from '../../utils/app-routes';
+import { TDropProps, TIngredient, TIngredientDrag } from '../../utils/types';
 
 
-function BurgerConstructor(){
+function BurgerConstructor(): JSX.Element{
    const dispatch = useDispatch();
    const ingredients = useSelector(getListBurgerConstructor);
    const bun=useSelector(getBunBurgerConstructor);
    const total= useSelector(getTotalBurgerConstructor);
    const {userLogin}=useSelector(getAuth);
    const nav=useNavigate();
-   const [, dropIngredientRef] = useDrop({
+   const [, dropIngredientRef] = useDrop<TIngredientDrag,unknown,TDropProps>({
       accept: 'ingredient',
       drop(item){
          dispatch({ type: ADD_INGREDIENT, item: {...item, dragId: nanoid() }});
@@ -32,7 +33,7 @@ function BurgerConstructor(){
       }
    });
 
-   const [, dropBunUpRef] = useDrop({
+   const [, dropBunUpRef] = useDrop<TIngredientDrag,unknown,TDropProps>({
       accept: 'bun',
       drop(item){
          if(bun){
@@ -44,9 +45,9 @@ function BurgerConstructor(){
          dispatch({ type: ADD_BUN, item: item });
       }
    });
-   const [, dropBunDownRef] = useDrop({
+   const [, dropBunDownRef] = useDrop<TIngredientDrag,unknown,TDropProps>({
       accept: 'bun',
-      drop(item){
+      drop(item:TIngredient){
          if(bun){
             dispatch({type:TOTAL_SWAP_BUN,price:item.price});
          }
@@ -57,7 +58,7 @@ function BurgerConstructor(){
       }
    });
 
-   const orderIdList=()=>{
+   const orderIdList=(): Array<number>=>{
       let arrayID =[];
 
       if(bun){
@@ -66,7 +67,7 @@ function BurgerConstructor(){
       }
 
       if(ingredients){
-         ingredients.map((item)=>{
+         ingredients.map((item:TIngredient)=>{
             arrayID.push(item._id);
          });
       }
@@ -76,9 +77,10 @@ function BurgerConstructor(){
 
    const { isLoading, isErrors } = useSelector(getOrder);
 
-   const [modal,setModal]= React.useState(false);
+   const [modal,setModal]= React.useState<boolean>(false);
    const handleOpenModal = () => {
       if(orderIdList().length>0){
+         //@ts-ignore
          dispatch(orderAction(orderIdList()));
       }
       !isLoading&&!isErrors&& setModal(true);
@@ -98,7 +100,7 @@ function BurgerConstructor(){
       setModal(false);
    };
 
-   const moveCard = useCallback((dragIndex, hoverIndex) => {
+   const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
       const dragCard = ingredients[dragIndex];
       const newCards = [...ingredients];
       newCards.splice(dragIndex, 1);
@@ -136,7 +138,7 @@ function BurgerConstructor(){
             <div ref={dropIngredientRef} className={styles._wrapperDrag}>
                {(
                   ingredients && ingredients.length > 0 ?
-                     ( ingredients.map((item,index) =>{
+                     ( ingredients.map((item:TIngredientDrag,index: number) =>{
                         return (<BurgerConstructorItemSort
                            item={item}
                            key={item.dragId}

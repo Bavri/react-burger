@@ -20,7 +20,7 @@ import AppHeader from '../app-header/app-header';
 import {listIngredientsAction} from '../../services/actions/list-ingredients';
 
 
-function App() {
+function App() : JSX.Element{
    const location = useLocation();
    const dispatch = useDispatch();
    const navigate = useNavigate();
@@ -31,8 +31,8 @@ function App() {
       navigate(-1);
    };
    useEffect(() => {
-      dispatch(authGetUserAction());
-      dispatch(listIngredientsAction());
+      dispatch(authGetUserAction() as any);
+      dispatch(listIngredientsAction() as any);
    }, [dispatch]);
 
    return(

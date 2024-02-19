@@ -1,19 +1,19 @@
 import styles from './_modal.module.scss';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import React from 'react';
+import React, { KeyboardEventHandler, ReactNode, SyntheticEvent } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 
-Modal.propTypes={
-   onClose : PropTypes.func.isRequired,
-   children: PropTypes.element.isRequired
+type TModalProps={
+   onClose : ()=>void,
+   children: ReactNode,
+   header?:string
 };
 
-function Modal(props){
+function Modal({onClose,children,header}:TModalProps): JSX.Element{
    const modalRoot = document.getElementById('modal-portal');
    const [showModal, setShowModal] = React.useState(true);
-   const ref = React.useRef(null);
+   const ref = React.useRef<HTMLDivElement>(null);
    React.useEffect(() => {
       setShowModal(true);
       setTimeout(() => {
@@ -23,10 +23,10 @@ function Modal(props){
    }, []);
    const handleCloseModal = () => {
       setShowModal(false);
-      props.onClose();
+      onClose();
    };
 
-   const handleKeyDown = (e) => {
+   const handleKeyDown = (e:KeyboardEvent) => {
       if (e.key=== 'Escape') {
          handleCloseModal();
       }
@@ -36,21 +36,22 @@ function Modal(props){
       <>
          { showModal && createPortal(
             <>
-               <ModalOverlay onClose={props.onClose}/>
-               <div className={styles._main} ref={ref} onKeyDown={handleKeyDown} tabIndex={-1}>
+               <ModalOverlay onClose={onClose}/>
+               <div className={styles._main} ref={ref}
+                  onKeyDown={handleKeyDown as unknown as KeyboardEventHandler<HTMLDivElement>} tabIndex={-1} >
                   <div className={styles._header}>
-                     <h2>{(props.header? props.header: '')}</h2>
+                     <h2>{(header? header: '')}</h2>
                      <button className={styles._close} onClick={handleCloseModal}>
                         <CloseIcon type="primary" />
                      </button>
                   </div>
-                  <div onClick={(e) => e.stopPropagation()}>
-                     {(props.children)}
+                  <div onClick={(e:SyntheticEvent) => e.stopPropagation()}>
+                     {(children)}
                   </div>
                </div>
             </>
             ,
-            modalRoot
+            modalRoot!
          )
          }
 

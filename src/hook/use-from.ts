@@ -1,9 +1,11 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, SyntheticEvent, ChangeEvent, FormEvent } from 'react';
 
-export function useForm(initialState, handleSubmit) {
+
+
+export function useForm<T>(initialState:T, handleSubmit: (state:T)=>void) {
    const [formData, setFormData] = useState(initialState);
 
-   const onSubmit = useCallback((e) => {
+   const onSubmit = useCallback((e:FormEvent) => {
       e.preventDefault();
 
       if (handleSubmit) {
@@ -13,13 +15,13 @@ export function useForm(initialState, handleSubmit) {
       }
    }, [formData, handleSubmit]);
 
-   const onChange = useCallback((e) => {
+   const onChange = useCallback((e:ChangeEvent<HTMLInputElement>) => {
       const name = e.target.name;
       const value = e.target.value;
       setFormData({ ...formData, [name]: value });
    }, [formData]);
 
-   const onReset=useCallback((e)=>{
+   const onReset=useCallback((e:SyntheticEvent)=>{
       e.preventDefault();
       setFormData(initialState);
    },[initialState]);

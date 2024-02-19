@@ -9,6 +9,7 @@ function ProfileLogout(){
    const dispatch= useDispatch();
    const {isError} =useSelector(getAuth);
    const onClick=()=>{
+      //@ts-ignore
       dispatch(authLogoutAction());
    };
    useEffect(

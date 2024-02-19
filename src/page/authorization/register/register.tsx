@@ -13,10 +13,11 @@ import {useDispatch} from 'react-redux';
 import {useForm} from '../../../hook/use-from';
 import {authRegisterAction} from '../../../services/actions/auth';
 
-function Register(){
+function Register():JSX.Element{
 
    const dispatch= useDispatch();
-   const sendingForm = useCallback((state) => {
+   const sendingForm = useCallback((state: any) => {
+      //@ts-ignore
       dispatch(authRegisterAction(state));
    }, [dispatch]);
 
