@@ -10,13 +10,6 @@ import {BrowserRouter} from 'react-router-dom';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-// const montPortal = () =>{
-//    const mountNode=document.body;
-//    const portalContainer = document.createElement('div');
-//    portalContainer.setAttribute('id', 'modal-portal');
-//    portalContainer.classList.add('portal');
-//    mountNode.appendChild(portalContainer);
-// };
 
 
 root.render(

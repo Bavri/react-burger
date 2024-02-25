@@ -6,7 +6,7 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {AppRoutes} from '../../utils/app-routes';
 
-function AppHeader() {
+function AppHeader() : JSX.Element {
    return(
       <header className={styles._header}>
          <nav className={styles._bar}>
@@ -14,7 +14,7 @@ function AppHeader() {
                <NavLink className={`${styles._link} p-4 mr-2`} to={AppRoutes.root}>
                   {({isActive}) => (
                      <>
-                        <BurgerIcon type={isActive? 'primary': 'secondary'} className={styles._icon}/>
+                        <BurgerIcon type={isActive? 'primary': 'secondary'}/>
                         <span className={
                            isActive?
                               `${styles._textPrimary} text text_type_main-smail ml-2`:
@@ -26,7 +26,7 @@ function AppHeader() {
                <NavLink className={`${styles._link} p-4 mr-2`} to={AppRoutes.root}>
                   {({isActive}) => (
                      <>
-                        <ListIcon type={isActive? 'primary': 'secondary'} className={styles._icon}/>
+                        <ListIcon type={isActive? 'primary': 'secondary'}/>
                         <span className={
                            isActive?
                               `${styles._textPrimary} text text_type_main-smail ml-2`:
@@ -40,7 +40,7 @@ function AppHeader() {
             <NavLink className={`${styles._link} p-4 mr-2`} to={`${AppRoutes.profile}${AppRoutes.profileInfo}`}>
                {({isActive}) => (
                   <>
-                     <ProfileIcon type={isActive? 'primary': 'secondary'} className={styles._icon}/>
+                     <ProfileIcon type={isActive? 'primary': 'secondary'}/>
                      <span className={
                         isActive?
                            `${styles._textPrimary} text text_type_main-smail ml-2`:

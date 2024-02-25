@@ -4,7 +4,7 @@ import styles from './_header-layout.module.scss';
 
 
 
-function  HeaderLayout(){
+function  HeaderLayout():JSX.Element{
    return(
       <div className={styles._main}>
          <AppHeader/>

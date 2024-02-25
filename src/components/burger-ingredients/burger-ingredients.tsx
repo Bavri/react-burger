@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
+
 import styles from './_burger-ingredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
@@ -8,20 +8,22 @@ import ListItemIngredients from '../list-item-ingredients/list-item-ingredients'
 import { getListIngredients,
    getListBurgerConstructor,getBunBurgerConstructor} from '../../services/selectors';
 import { useInView } from 'react-intersection-observer';
+import { TIngredientDrag } from '../../utils/types';
 
-function BurgerIngredients (){
+
+function BurgerIngredients ():JSX.Element{
    const { data } = useSelector(getListIngredients);
 
-   const  listItem=()=>{
-      let sortListItem=[];
-      sortListItem['bun'] =  data.filter((item) => item.type === 'bun');
-      sortListItem['main'] =   data.filter((item) => item.type === 'main');
-      sortListItem['sauce'] =  data.filter((item) => item.type === 'sauce');
+   const  listItem=():Record<string, Array<TIngredientDrag>>=>{
+      let sortListItem:Record<string, Array<TIngredientDrag>>={};
+      sortListItem['bun'] =  data.filter((item:TIngredientDrag) => item.type === 'bun');
+      sortListItem['main'] =   data.filter((item:TIngredientDrag) => item.type === 'main');
+      sortListItem['sauce'] =  data.filter((item:TIngredientDrag) => item.type === 'sauce');
 
       return sortListItem;
    } ;
 
-   const [activeTab, setActiveTab] = React.useState('bun');
+   const [activeTab, setActiveTab] = React.useState<string>('bun');
    const [refBun, inViewBun] = useInView({
       threshold: 1
    });
@@ -51,9 +53,9 @@ function BurgerIngredients (){
    const ingredients = useSelector(getListBurgerConstructor);
    const bun = useSelector(getBunBurgerConstructor);
 
-   const countItemConstructor = (id) =>{
+   const countItemConstructor = (id:string):number =>{
       let count=0;
-      ingredients.map((item)=>{
+      ingredients.map((item:TIngredientDrag)=>{
          if(item._id==id){
             count+=1;
          }
@@ -62,7 +64,7 @@ function BurgerIngredients (){
       return count;
    };
 
-   const countBunConstructor= (id) =>{
+   const countBunConstructor= (id:string):number  =>{
       if(bun && bun._id==id){
          return 2;
       }
@@ -89,7 +91,7 @@ function BurgerIngredients (){
                <h2 className="mb-6 text text_type_main-medium">Булки</h2>
                <div className={styles._grid}>
                   {(listItem()['bun'].map((element) => {
-                     return (<ListItemIngredients key={element._id} data={element} count={countBunConstructor(element._id)}/>);
+                     return (<ListItemIngredients key={element._id}data={element} count={countBunConstructor(element._id)}/>);
                   }))}
                </div>
             </li>

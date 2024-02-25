@@ -9,7 +9,7 @@ import { getOrderNumber } from '../../services/selectors';
 
 
 
-function OrderDetails(){
+function OrderDetails():JSX.Element{
    const id=useSelector(getOrderNumber);
 
    return(

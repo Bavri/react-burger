@@ -14,7 +14,8 @@ import {useForm} from '../../hook/use-from';
 
 function ProfileInfo(){
    const dispatch= useDispatch();
-   const sendingForm = useCallback((state) => {
+   const sendingForm = useCallback((state: any) => {
+      //@ts-ignore
       dispatch(authPatchUserAction(state));
    }, [dispatch]);
    const { user } = useSelector(getAuth);
@@ -42,7 +43,6 @@ function ProfileInfo(){
             value={formData.name}
             name={'name'}
             placeholder="Имя"
-            isIcon
          />
          <EmailInput
             onChange={onChange}

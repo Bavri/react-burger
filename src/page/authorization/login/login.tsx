@@ -10,11 +10,10 @@ import { authLoginAction} from '../../../services/actions/auth';
 import {useForm} from '../../../hook/use-from';
 import {useCallback} from 'react';
 
-function Login(){
+function Login(): JSX.Element{
    const dispatch= useDispatch();
-   // const userLogin = useSelector(getUserOk);
-   // const nav = useNavigate();
-   const sendingForm = useCallback((state) => {
+   const sendingForm = useCallback((state: any) => {
+      //@ts-ignore
       dispatch(authLoginAction(state));
    }, [dispatch]);
 
